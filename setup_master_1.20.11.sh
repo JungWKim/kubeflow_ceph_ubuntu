@@ -245,3 +245,27 @@ helm install --wait --generate-name \
 kubectl apply -f files/kubernetes-dashboard.yaml
 kubectl apply -f files/sa.yaml
 kubectl apply -f files/clusterrolebinding.yaml
+
+#------------- install rook admission controller
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.7.1/cert-manager.yaml
+
+#------------- load rbd module
+modprobe rbd
+
+#------------- download rook ceph repository
+git clone --single-branch --branch v1.10.6 https://github.com/rook/rook.git
+
+#------------- execute rook operator
+kubectl apply -f rook/deploy/examples/crds.yaml
+kubectl apply -f rook/deploy/examples/common.yaml
+kubectl apply -f rook/deploy/examples/operator.yaml
+
+#------------- create ceph cluster
+kubectl apply -f rook/deploy/examples/cluster.yaml
+
+#------------- install rook toolbox
+kubectl apply -f rook/deploy/examples/toolbox.yaml
+
+#------------- enable toolbok telemery
+kubectl -n rook-ceph exec -dt deploy/rook-ceph-tools -- ceph telemetry on
+

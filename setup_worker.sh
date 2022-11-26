@@ -155,3 +155,6 @@ echo "source <(kubeadm completion bash)" >> ${ADMIN_HOME}/.bashrc
 echo "source <(kubectl completion bash)" >> $HOME/.bashrc
 echo "source <(kubeadm completion bash)" >> $HOME/.bashrc
 source $HOME/.bashrc
+
+#------------- load rbd module
+modprobe rbd
