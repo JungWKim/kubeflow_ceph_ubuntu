@@ -259,13 +259,15 @@ git clone --single-branch --branch v1.10.6 https://github.com/rook/rook.git
 kubectl apply -f rook/deploy/examples/crds.yaml
 kubectl apply -f rook/deploy/examples/common.yaml
 kubectl apply -f rook/deploy/examples/operator.yaml
+sleep 5
 
 #------------- create ceph cluster
 kubectl apply -f rook/deploy/examples/cluster.yaml
+sleep 5
 
 #------------- install rook toolbox
 kubectl apply -f rook/deploy/examples/toolbox.yaml
+sleep 5
 
 #------------- enable toolbok telemery
-kubectl -n rook-ceph exec -dt deploy/rook-ceph-tools -- ceph telemetry on
-
+#kubectl -n rook-ceph exec -dt deploy/rook-ceph-tools -- ceph telemetry on
