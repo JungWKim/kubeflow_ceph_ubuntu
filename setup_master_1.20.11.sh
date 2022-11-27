@@ -255,10 +255,11 @@ modprobe rbd
 #------------- download rook ceph repository
 git clone --single-branch --branch v1.10.6 https://github.com/rook/rook.git
 
-#------------- execute rook operator
-kubectl apply -f rook/deploy/examples/crds.yaml
-kubectl apply -f rook/deploy/examples/common.yaml
-kubectl apply -f rook/deploy/examples/operator.yaml
+#------------- install rook operator by helm
+sed -i "s/enableDiscovertyDaemon\: false/enableDiscovertyDaemon\: true/" rook/deploy/charts/rook-ceph/values.yaml
+sed -i "s/tag\: VERSION/tag\: v1.10.6/" rook/deploy/charts/rook-ceph/values.yaml
+helm repo add rook-release https://charts.rook.io/release
+helm install --create-namespace --namespace rook-ceph rook-ceph rook-release/rook-ceph -f rook/deploy/charts/rook-ceph/values.yaml
 sleep 5
 
 #------------- create ceph cluster
@@ -269,5 +270,8 @@ sleep 5
 kubectl apply -f rook/deploy/examples/toolbox.yaml
 sleep 5
 
+#------------- check ceph status
+kubectl -n rook-ceph exec deploy/rook-ceph-tools -- ceph status
+
 #------------- enable toolbok telemery
-#kubectl -n rook-ceph exec -dt deploy/rook-ceph-tools -- ceph telemetry on
+kubectl -n rook-ceph exec deploy/rook-ceph-tools -- ceph telemetry on
