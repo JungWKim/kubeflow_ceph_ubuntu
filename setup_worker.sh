@@ -157,4 +157,4 @@ echo "source <(kubeadm completion bash)" >> $HOME/.bashrc
 source $HOME/.bashrc
 
 #------------- load rbd module
-modprobe rbd
+echo rbd | tee -a /etc/modules

@@ -250,7 +250,7 @@ kubectl apply -f files/clusterrolebinding.yaml
 kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.7.1/cert-manager.yaml
 
 #------------- load rbd module
-modprobe rbd
+echo rbd | tee -a /etc/modules
 
 #------------- download rook ceph repository
 git clone --single-branch --branch v1.10.6 https://github.com/rook/rook.git
