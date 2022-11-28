@@ -23,6 +23,11 @@ kubectl apply -f rook/deploy/examples/cluster.yaml
 #   --set operatorNamespace=rook-ceph rook-release/rook-ceph-cluster -f rook/deploy/charts/rook-ceph-cluster/values.yaml
 sleep 5
 
+#------------- deploy components for block storage
+kubectl apply -f rook/deploy/examples/csi/rbd/storageclass.yaml
+#------------- deploy components for erasure coded block storage
+#kubectl apply -f rook/deploy/examples/csi/rbd/storageclass-ec.yaml
+
 #------------- install rook toolbox
 kubectl apply -f rook/deploy/examples/toolbox.yaml
 sleep 5
