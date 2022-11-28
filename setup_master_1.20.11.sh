@@ -245,3 +245,7 @@ helm install --wait --generate-name \
 kubectl apply -f files/kubernetes-dashboard.yaml
 kubectl apply -f files/sa.yaml
 kubectl apply -f files/clusterrolebinding.yaml
+
+#------------- load rbd module
+modprobe rbd
+echo rbd | tee -a /etc/modules

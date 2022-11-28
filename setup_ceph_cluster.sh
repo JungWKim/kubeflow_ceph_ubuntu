@@ -3,10 +3,6 @@
 #------------- install rook admission controller
 kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.7.1/cert-manager.yaml
 
-#------------- load rbd module
-modprobe rbd
-echo rbd | tee -a /etc/modules
-
 #------------- download rook ceph repository
 git clone --single-branch --branch v1.10.6 https://github.com/rook/rook.git
 
@@ -14,7 +10,7 @@ git clone --single-branch --branch v1.10.6 https://github.com/rook/rook.git
 #kubectl apply -f rook/deploy/examples/crds.yaml
 #kubectl apply -f rook/deploy/examples/common.yaml
 #kubectl apply -f rook/deploy/examples/operator.yaml
-sed -i "s/enableDiscovertyDaemon\: false/enableDiscovertyDaemon\: true/" rook/deploy/charts/rook-ceph/values.yaml
+sed -i "s/enableDiscoveryDaemon\: false/enableDiscoveryDaemon\: true/" rook/deploy/charts/rook-ceph/values.yaml
 sed -i "s/tag\: VERSION/tag\: v1.10.6/" rook/deploy/charts/rook-ceph/values.yaml
 helm repo add rook-release https://charts.rook.io/release
 helm install --create-namespace --namespace rook-ceph rook-ceph rook-release/rook-ceph -f rook/deploy/charts/rook-ceph/values.yaml
