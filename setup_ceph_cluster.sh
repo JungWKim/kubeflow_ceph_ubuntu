@@ -14,6 +14,10 @@ sed -i -r -e "/    modules\:/a\      \- name\: rook\\n        enabled\: true" ro
 sed -i "s/ROOK_ENABLE_DISCOVERY_DAEMON\: \"false\"/ROOK_ENABLE_DISCOVERY_DAEMON\: \"false\"/" rook/deploy/examples/operator.yaml
 # this is to enable 'physical disks' tab in dashboard
 
+#------------- change ROOK_DISCOVER_DEVICES_INTERVAL from 60m to 5s
+sed -i "s/60m/5s/" rook/deploy/examples/operator.yaml
+# this's going to shorten interval time of "physical disks' tab in dashboard from 60m to 5s
+
 #------------- install rook operator by helm
 kubectl apply -f rook/deploy/examples/crds.yaml
 kubectl apply -f rook/deploy/examples/common.yaml
